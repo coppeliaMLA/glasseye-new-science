@@ -1,0 +1,8 @@
+# Glasseye: The New Science, served at https://newscience.glasseye.ink
+# The page text lives in index.md; layout and styling in _layouts/glasseye_course.html.
+title: "Glasseye: The New Science"
+url: "https://newscience.glasseye.ink"
+baseurl: ""
+markdown: kramdown
+exclude:
+  - README.md

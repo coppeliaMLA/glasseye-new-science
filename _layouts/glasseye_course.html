@@ -1,0 +1,534 @@
+<!doctype html>
+<!--
+  Glasseye-style course page layout.
+  All text lives in the page's Markdown file (index.md):
+  hero and CTA copy in the front matter, intro in the body, syllabus under `sessions:`.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title }} · {{ page.eyebrow }}</title>
+  <meta name="description" content="{{ page.description | escape }}">
+  <meta property="og:title" content="{{ page.title }} · {{ page.eyebrow }}">
+  <meta property="og:description" content="{{ page.description | escape }}">
+  <meta property="og:image" content="{{ page.image | absolute_url }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #363737;
+      --text-secondary: #868787;
+      --detail: #e6e6e6;
+      --accent: #8950bb;
+      --accent-dark: #7c44ae;
+      --serif: Lora, Georgia, serif;
+      --sans: 'SF Pro Display', -apple-system, system-ui, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --column: 728px;
+      --hero-image: url("{{ page.image | relative_url }}");
+    }
+
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 19px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+
+    /* ---------- Masthead (Substack-style top bar) ---------- */
+    .masthead {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      color: #fff;
+    }
+    .masthead .brand {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 22px;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+    }
+    .masthead .read {
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 8px 14px;
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: 8px;
+      transition: background .15s;
+    }
+    .masthead .read:hover { background: rgba(255,255,255,0.12); }
+
+    /* ---------- Hero with greyed image ---------- */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: flex-end;
+      color: #fff;
+      background: #3a3a3a var(--hero-image) center 30% / cover no-repeat;
+      overflow: hidden;
+    }
+    .hero::before {
+      /* flat grey wash plus a darkening gradient toward the text, as on the Glasseye cards */
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 22%),
+        linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.78) 100%),
+        rgba(40,40,40,0.48);
+    }
+    .hero-inner {
+      position: relative;
+      width: 100%;
+      max-width: var(--column);
+      margin: 0 auto;
+      padding: 120px 24px 72px;
+    }
+    .eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #c9c9c9;
+      margin: 0 0 14px;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: clamp(44px, 8vw, 76px);
+      line-height: 1.05;
+      margin: 0 0 18px;
+      letter-spacing: -0.01em;
+    }
+    .hero .dek {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(19px, 2.6vw, 24px);
+      line-height: 1.45;
+      color: #e4e4e4;
+      margin: 0 0 32px;
+      max-width: 34em;
+    }
+    .sessions-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 22px;
+      margin: 0 0 34px;
+      padding: 0;
+      list-style: none;
+      font-size: 15px;
+      color: #d0d0d0;
+    }
+    .sessions-strip li span {
+      color: #9a9a9a;
+      margin-right: 6px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .btn {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: 17px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--accent);
+      border: 0;
+      border-radius: 8px;
+      padding: 14px 28px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .15s, transform .15s;
+    }
+    .btn:hover { background: var(--accent-dark); }
+    .btn:active { transform: translateY(1px); }
+    .btn:focus-visible { outline: 3px solid rgba(137,80,187,0.45); outline-offset: 3px; }
+
+    /* ---------- Body column ---------- */
+    main {
+      max-width: var(--column);
+      margin: 0 auto;
+      padding: 64px 24px 24px;
+    }
+    main p { margin: 0 0 1.2em; }
+    .intro > p:first-child {
+      font-size: 21px;
+      line-height: 1.6;
+    }
+    .intro blockquote {
+      margin: 40px 0;
+      padding: 0 0 0 22px;
+      border-left: 3px solid var(--accent);
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 23px;
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 30px;
+      line-height: 1.25;
+      margin: 64px 0 8px;
+    }
+    .section-note {
+      color: var(--text-secondary);
+      font-size: 16px;
+      margin: 0 0 32px;
+    }
+
+    .session {
+      border-top: 1px solid var(--detail);
+      padding: 36px 0 12px;
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 0 20px;
+    }
+    .session-num {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 44px;
+      line-height: 1;
+      color: var(--accent);
+    }
+    .session h3 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 26px;
+      line-height: 1.25;
+      margin: 2px 0 6px;
+    }
+    .session .kicker {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin: 0 0 18px;
+    }
+    /* Group headings inside a session ("#### New tools" in the Markdown) */
+    .session h4 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 19px;
+      margin: 12px 0 4px;
+    }
+    .session ul {
+      margin: 0 0 18px;
+      padding-left: 1.1em;
+    }
+    .session li { margin: 0 0 6px; }
+    .session h4 + ul,
+    .session ul ul {
+      color: #555;
+      font-size: 17px;
+      list-style-type: circle;
+    }
+    .session ul ul { margin: 6px 0 10px; }
+
+    /* ---------- Closing CTA band ---------- */
+    .cta {
+      position: relative;
+      margin-top: 72px;
+      color: #fff;
+      text-align: center;
+      background: #3a3a3a var(--hero-image) center 45% / cover no-repeat;
+    }
+    .cta::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: rgba(18,18,18,0.88);
+    }
+    .cta-inner {
+      position: relative;
+      max-width: var(--column);
+      margin: 0 auto;
+      padding: 88px 24px;
+    }
+    .cta h2 {
+      color: #fff;
+      margin: 0 0 12px;
+      font-size: clamp(30px, 5vw, 42px);
+    }
+    .cta p {
+      font-family: var(--serif);
+      font-style: italic;
+      color: #dcdcdc;
+      font-size: 20px;
+      margin: 0 0 30px;
+    }
+
+    footer {
+      max-width: var(--column);
+      margin: 0 auto;
+      padding: 36px 24px 48px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px 24px;
+    }
+    footer .wordmark {
+      font-family: var(--serif);
+      font-weight: 600;
+      color: var(--text);
+      font-size: 16px;
+    }
+    footer a { text-decoration: none; border-bottom: 1px solid var(--detail); }
+    footer a:hover { color: var(--text); }
+
+    html { scroll-behavior: smooth; }
+    .session, .why, .cta { scroll-margin-top: 72px; }
+
+    /* Intro links jumping to the sessions */
+    .intro a, .why-text a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(137,80,187,0.35);
+      transition: border-color .15s;
+    }
+    .intro a:hover, .why-text a:hover { border-bottom-color: var(--accent); }
+    .session:target .session-num { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+
+    /* ---------- Why Glasseye ---------- */
+    .why { border-top: 1px solid var(--detail); margin-top: 48px; }
+    .why h2 { margin-top: 48px; margin-bottom: 24px; }
+    .why-body.has-image {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .why-image {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(1);
+      box-shadow: 0 0 0 6px #fff, 0 0 0 7px var(--text);   /* thin engraved-plate frame */
+      margin: 7px;
+      width: calc(100% - 14px);
+    }
+    .why-text p:last-child { margin-bottom: 0; }
+
+    /* ---------- Package, set straight onto the CTA band ---------- */
+    .package { max-width: 520px; margin: 0 auto; }
+    .cta .package-heading {
+      font-family: var(--sans);
+      font-style: normal;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #9a9a9a;
+      margin: 0 0 18px;
+    }
+    .package-items {
+      list-style: none;
+      margin: 0 0 36px;
+      padding: 0;
+    }
+    .package-items li {
+      font-family: var(--serif);
+      font-size: 20px;
+      line-height: 1.45;
+      color: #f2f2f2;
+      padding: 10px 0;
+    }
+
+    /* ---------- Sticky sign-up bar ---------- */
+    .stickybar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 10;
+      background: rgba(255,255,255,0.96);
+      border-bottom: 1px solid var(--detail);
+      backdrop-filter: blur(6px);
+      transform: translateY(-100%);
+      transition: transform .25s ease;
+    }
+    .stickybar.is-visible { transform: none; }
+    .stickybar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .stickybar-title { font-size: 15px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .stickybar .wordmark { font-family: var(--serif); font-weight: 600; color: var(--text); font-size: 17px; }
+    .btn-small { font-size: 14px; padding: 8px 16px; white-space: nowrap; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .stickybar { transition: none; }
+    }
+
+    /* On wide screens move the hero text to the right so the image subject stays visible */
+    /* Side is set by `hero_text_side` in the page's front matter */
+    @media (min-width: 960px) {
+      .hero-inner { max-width: 600px; }
+      .hero--text-right .hero-inner { margin: 0 6vw 0 auto; padding-right: 0; }
+      .hero--text-left .hero-inner { margin: 0 auto 0 6vw; padding-left: 0; }
+      .hero--text-right::before,
+      .hero--text-left::before {
+        background:
+          linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 22%),
+          linear-gradient(var(--hero-side-angle), rgba(0,0,0,0) 35%, rgba(0,0,0,0.55) 70%),
+          linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6) 100%),
+          rgba(40,40,40,0.45);
+      }
+      .hero--text-right { --hero-side-angle: 90deg; }
+      .hero--text-left { --hero-side-angle: 270deg; }
+    }
+
+    @media (max-width: 560px) {
+      body { font-size: 18px; }
+      .masthead { padding: 14px 16px; }
+      .hero-inner, main, .cta-inner, footer { padding-left: 16px; padding-right: 16px; }
+      .hero-inner { padding-top: 96px; padding-bottom: 48px; }
+      .hero { background-position: 30% center; }
+      .session { grid-template-columns: 1fr; }
+      .session-num { font-size: 34px; margin-bottom: 8px; }
+      .btn { width: 100%; text-align: center; }
+      .btn-small { width: auto; }
+      .why-body.has-image { grid-template-columns: 1fr; }
+      .why-image { max-width: 240px; }
+      .stickybar-inner { padding: 8px 16px; }
+    }
+  </style>
+</head>
+<body>
+  {%- comment -%}
+    Sign-up buttons. With `tally_form_id` set in the page's front matter they open that
+    Tally form as a pop-up (and fall back to the form's own page without JavaScript).
+    Without it they are inert placeholders.
+  {%- endcomment -%}
+  {%- capture signup_attrs -%}
+    {%- if page.tally_form_id -%}
+      href="https://tally.so/r/{{ page.tally_form_id }}" data-tally-open="{{ page.tally_form_id }}" data-tally-layout="modal" data-tally-width="560" data-tally-overlay="1" data-tally-hide-title="1"
+    {%- else -%}
+      role="button" aria-disabled="true"
+    {%- endif -%}
+  {%- endcapture %}
+
+  <header class="masthead">
+    <a class="brand" href="https://www.glasseye.ink">Glasseye</a>
+    <a class="read" href="https://www.glasseye.ink">Read the newsletter</a>
+  </header>
+
+  <section class="hero hero--text-{{ page.hero_text_side | default: 'right' }}">
+    <div class="hero-inner">
+      <p class="eyebrow">{{ page.eyebrow }}</p>
+      <h1>{{ page.title }}</h1>
+      <p class="dek">{{ page.dek }}</p>
+      {% if page.sessions %}
+      <ol class="sessions-strip">
+        {% for session in page.sessions %}<li><span>{{ session.number }}</span>{{ session.title }}</li>
+        {% endfor %}
+      </ol>
+      {% endif %}
+      <a class="btn" {{ signup_attrs }}>{{ page.button_text | default: "Sign up now" }}</a>
+    </div>
+  </section>
+
+  <main>
+    <div class="intro">
+      {{ content }}
+    </div>
+
+    {% if page.sessions %}
+    <h2>{{ page.syllabus_heading | default: "The syllabus" }}</h2>
+    {% if page.syllabus_note %}<p class="section-note">{{ page.syllabus_note }}</p>{% endif %}
+
+    {% for session in page.sessions %}
+    <article class="session" id="{{ session.title | slugify }}">
+      <div class="session-num">{{ session.number }}</div>
+      <div>
+        <h3>{{ session.title }}</h3>
+        {% if session.kicker %}<p class="kicker">{{ session.kicker }}</p>{% endif %}
+        {{ session.content | markdownify }}
+      </div>
+    </article>
+    {% endfor %}
+    {% endif %}
+
+    {% if page.why %}
+    <section class="why" id="{{ page.why_heading | slugify }}">
+      <h2>{{ page.why_heading }}</h2>
+      <div class="why-body{% if page.why_image %} has-image{% endif %}">
+        {% if page.why_image %}<img class="why-image" src="{{ page.why_image | relative_url }}" alt="" loading="lazy">{% endif %}
+        <div class="why-text">{{ page.why | markdownify }}</div>
+      </div>
+    </section>
+    {% endif %}
+  </main>
+
+  <section class="cta" id="sign-up">
+    <div class="cta-inner">
+      <h2>{{ page.cta_heading }}</h2>
+      {% if page.cta_text %}<p>{{ page.cta_text }}</p>{% endif %}
+      {% if page.package %}
+      <div class="package">
+        <p class="package-heading">{{ page.package_heading | default: "The course package" }}</p>
+        <ul class="package-items">
+          {% for item in page.package %}<li>{{ item | markdownify | remove: '<p>' | remove: '</p>' | strip }}</li>
+          {% endfor %}
+        </ul>
+        <a class="btn" {{ signup_attrs }}>{{ page.button_text | default: "Sign up now" }}</a>
+      </div>
+      {% else %}
+      <a class="btn" {{ signup_attrs }}>{{ page.button_text | default: "Sign up now" }}</a>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Slim bar that appears once the hero has scrolled away, and hides again over the sign-up band -->
+  <div class="stickybar" aria-hidden="true">
+    <div class="stickybar-inner">
+      <span class="stickybar-title"><span class="wordmark">Glasseye</span> · {{ page.title }}</span>
+      <a class="btn btn-small" {% if page.tally_form_id %}{{ signup_attrs }}{% else %}href="#sign-up"{% endif %} tabindex="-1">{{ page.button_text | default: "Sign up now" }}</a>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var bar = document.querySelector('.stickybar');
+      var hero = document.querySelector('.hero');
+      var cta = document.querySelector('.cta');
+      if (!bar || !hero || !('IntersectionObserver' in window)) return;
+      var heroVisible = true, ctaVisible = false;
+      function update() {
+        var show = !heroVisible && !ctaVisible;
+        bar.classList.toggle('is-visible', show);
+        bar.setAttribute('aria-hidden', show ? 'false' : 'true');
+        bar.querySelector('a').tabIndex = show ? 0 : -1;
+      }
+      new IntersectionObserver(function (e) { heroVisible = e[0].isIntersecting; update(); }).observe(hero);
+      new IntersectionObserver(function (e) { ctaVisible = e[0].isIntersecting; update(); }).observe(cta);
+    })();
+  </script>
+
+  <footer>
+    <span><span class="wordmark">Glasseye</span> · by Simon Raper</span>
+    <span><a href="https://www.glasseye.ink">glasseye.ink</a></span>
+  </footer>
+
+  {% if page.tally_form_id %}<script async src="https://tally.so/widgets/embed.js"></script>{% endif %}
+</body>
+</html>
