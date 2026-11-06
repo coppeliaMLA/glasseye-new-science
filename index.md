@@ -49,7 +49,7 @@ sessions:
     content: |
       In which we introduce you to:
 
-      - The new tools and concepts – not just coding agents, but skills, MCPs, connectors, plugins, hooks and harnesses, evals, guardrails, and the use of multiple agents
+      - The new tools and concepts – not just coding agents, but skills, MCPs, connectors, plugins, hooks, harnesses, evals, guardrails, and the use of multiple agents
       - Old tools to be used in new, very different ways: CLIs, linters, validators, unit tests, notebooks, config files, repositories, versioning software, graphs, and knowledge bases
 
   - number: III
