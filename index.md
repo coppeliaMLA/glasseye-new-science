@@ -5,6 +5,8 @@ permalink: /
 image: /assets/images/glasseye/telescope-16-9.jpg
 # Which side the hero text sits on, on wide screens (left or right); pick the side away from the image's subject
 hero_text_side: left
+# Which part of the image to show on phones and tablets (left, center or right)
+hero_mobile_position: left
 
 # Search engines and link previews
 description: "The New Science: a three-session Glasseye course on doing data science, statistics, and machine learning well now that AI has changed the environment, the tools, and the skills."

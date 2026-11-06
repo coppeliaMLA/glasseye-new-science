@@ -28,6 +28,7 @@
       --sans: 'SF Pro Display', -apple-system, system-ui, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       --column: 728px;
       --hero-image: url("{{ page.image | relative_url }}");
+      --hero-mobile-position: {{ page.hero_mobile_position | default: "center" }};
     }
 
     * { box-sizing: border-box; }
@@ -398,12 +399,23 @@
       .hero--text-left { --hero-side-angle: 270deg; }
     }
 
+    /* Phones and tablets: the text sits over the whole image, so use a heavier overlay
+       and show the part of the picture set by `hero_mobile_position` (e.g. left, center, right) */
+    @media (max-width: 959px) {
+      .hero { background-position: var(--hero-mobile-position, center) center; }
+      .hero::before {
+        background:
+          linear-gradient(180deg, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.10) 22%),
+          linear-gradient(180deg, rgba(0,0,0,0) 25%, rgba(0,0,0,0.85) 100%),
+          rgba(30,30,30,0.62);
+      }
+    }
+
     @media (max-width: 560px) {
       body { font-size: 18px; }
       .masthead { padding: 14px 16px; }
       .hero-inner, main, .cta-inner, footer { padding-left: 16px; padding-right: 16px; }
       .hero-inner { padding-top: 96px; padding-bottom: 48px; }
-      .hero { background-position: 30% center; }
       .session { grid-template-columns: 1fr; }
       .session-num { font-size: 34px; margin-bottom: 8px; }
       .btn { width: 100%; text-align: center; }
