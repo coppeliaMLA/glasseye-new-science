@@ -9,7 +9,7 @@ hero_text_side: left
 hero_mobile_position: left
 
 # Search engines and link previews
-description: "The New Science: a three-session Glasseye course on doing data science, statistics, and machine learning well now that AI has changed the environment, the tools, and the skills."
+description: "The New Science: a three-session Glasseye course on post-generative-AI data science."
 
 # Hero (top of page)
 # Tip: wrap any value containing ": " in double quotes, or the page won't build.
@@ -77,7 +77,7 @@ why: |
 
   Simon is also a rabid early adopter of new technology and has been adapting his methods since the early days of generative AI. He has both the old knowledge and the new techniques.
 
-  The [Glasseye newsletter](https://www.glasseye.ink), written by Simon, fiercely promotes good practice, in a world dominated by hype, and explores the implications of the AI revolution for that practice.
+  The [Glasseye newsletter](https://www.glasseye.ink), written by Simon, fiercely promotes good practice in a sector dominated by hype, and explores the implications of the generative-AI revolution for data science, machine learning, and statistics.
 
 # Closing band (bottom of page): heading, then the package label with the sign-up button
 cta_heading: Join The New Science
