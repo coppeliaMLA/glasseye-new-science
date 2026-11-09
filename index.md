@@ -3,6 +3,8 @@
 layout: glasseye_course
 permalink: /
 image: /assets/images/glasseye/telescope-16-9.jpg
+# Link-preview image (WhatsApp, LinkedIn, Slack etc.): 1200×630, title only
+share_image: /assets/images/glasseye/share-card.jpg
 # Which side the hero text sits on, on wide screens (left or right); pick the side away from the image's subject
 hero_text_side: left
 # Which part of the image to show on phones and tablets (left, center or right)
