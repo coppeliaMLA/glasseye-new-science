@@ -18,10 +18,31 @@ description: "The New Science: a three-session Glasseye course on post-generativ
 eyebrow: A Glasseye course
 title: The New Science
 dek: "Agents have changed the work of data scientists – there's no going back. Used correctly they free you up for the proper work of a scientist: testing theories, building tools, and, above all, solving problems. Learn how to make agents work with you to produce robust, effective data science."
+# Facts shown under the hero text, and the next cohort's dates
+hero_meta:
+  - Taught live online
+  - Three 90-minute sessions
+  - Small cohort
+next_cohort: "Next cohort: 4–8 January 2027"
 button_text: Sign up now
 # Sign-up form: the ID from your Tally form's share link (tally.so/r/<ID>).
 # Leave empty and the buttons do nothing.
 tally_form_id: kb95N1
+
+# "Course details" panel (after the intro, before the syllabus). `note` is Markdown.
+details_heading: Course details
+details:
+  - label: Dates
+    value: "4–8 January 2027: three sessions"
+  - label: Format
+    value: Live online workshops, recorded
+  - label: Live instruction
+    value: 4.5 hours, plus a 30-minute one-to-one with Simon
+  - label: Cohort size
+    value: Maximum 12 participants
+  - label: Price
+    value: "£385 + VAT per person"
+details_note: "Buying for a team? Discounts are available for groups of 10 or more."
 
 # Syllabus. Each session's `content` is Markdown:
 #   - plain bullet lists, with nested items indented two spaces
@@ -72,9 +93,23 @@ sessions:
 
       Finally we present a fully worked example of a data-science project using the tools and skills.
 
+# "Who is it for" section (after the syllabus). Both fields are Markdown.
+audience_heading: Who is this course for?
+audience: |
+  - Data scientists and statisticians who already use LLMs or coding agents and want output they can trust
+  - Analysts and machine-learning engineers who want to take on more ambitious work without losing rigour
+  - Data-science leads setting the standards for how their team works with agents
+prerequisites_heading: What you need
+prerequisites: |
+  - Working knowledge of Python or R
+  - Familiarity with statistical modelling or machine learning
+  - A paid subscription to a coding agent (e.g. Claude Code, Codex or Cursor); free tiers run out too quickly for the hands-on exercises
+
 # "Why Glasseye" section (after the syllabus). `why` is Markdown.
 why_heading: Why do this with Glasseye?
 why: |
+  Every session is taught live by Simon, so you can bring your own questions and problems.
+
   The course is run by [Simon Raper](https://www.linkedin.com/in/simonrapercoppelia), a veteran data scientist with 25 years of experience of problem solving in data science, statistics, and machine learning. He has trained and mentored hundreds of data scientists, including at Google, *The Economist*, and ITV.
 
   Simon is also a rabid early adopter of new technology and has been adapting his methods since the early days of generative AI. He has both the old knowledge and the new techniques.
@@ -85,9 +120,24 @@ why: |
 cta_heading: Join The New Science
 package_heading: The course package
 package:
-  - Three 90-minute online workshops
+  - Three 90-minute live online workshops, 4.5 hours of instruction in all
   - A 30-minute one-to-one technical development session with Simon
-  - A one-year subscription to the paid tier of Glasseye
+  - Recordings of every session, yours to keep
+  - Slides, notebooks, data and code from every session, including the full worked example
+package_price: "£385 + VAT per person"
+package_cohort: "Next cohort: 4–8 January 2027"
+
+# FAQ (after the "Why Glasseye" section). Each answer is Markdown.
+faq_heading: Frequently asked questions
+faq:
+  - question: What if I can't make a session live?
+    answer: "Every session is recorded, and the recording is shared within 24 hours. The sessions are designed to be attended live, though: much of the value is in the discussion and the chance to bring your own problems."
+  - question: I already use Claude or ChatGPT. What will I learn here?
+    answer: "The tools are easy to pick up; using them well is not. The course is about the *how*: the discipline, oversight and scientific method that turn an agent from a source of plausible-looking output into a reliable collaborator."
+  - question: What do I leave with?
+    answer: "A clear method for running data-science projects with agents, the recordings, all the course materials and notebooks, a fully worked example project, and a one-to-one session with Simon to apply it all to your own work."
+  - question: Can my company pay, or buy places for a team?
+    answer: "Yes. Discounts are available for groups of 10 or more."
 ---
 
 Almost everyone is saying the same thing... 

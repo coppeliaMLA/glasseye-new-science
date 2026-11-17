@@ -38,6 +38,7 @@
 
     * { box-sizing: border-box; }
     html { -webkit-text-size-adjust: 100%; }
+    body { overflow-x: clip; }   /* full-width bands use 100vw, which includes any scrollbar */
     body {
       margin: 0;
       background: var(--bg);
@@ -128,21 +129,6 @@
       color: #e4e4e4;
       margin: 0 0 32px;
       max-width: 34em;
-    }
-    .sessions-strip {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 22px;
-      margin: 0 0 34px;
-      padding: 0;
-      list-style: none;
-      font-size: 15px;
-      color: #d0d0d0;
-    }
-    .sessions-strip li span {
-      color: #9a9a9a;
-      margin-right: 6px;
-      font-variant-numeric: tabular-nums;
     }
 
     .btn {
@@ -299,7 +285,7 @@
     footer a:hover { color: var(--text); }
 
     html { scroll-behavior: smooth; }
-    .session, .why, .cta { scroll-margin-top: 72px; }
+    .session, .why, .cta, .details, .audience, .faq { scroll-margin-top: 72px; }
 
     /* Intro links jumping to the sessions */
     .intro a, .why-text a {
@@ -333,7 +319,7 @@
     .why-text p:last-child { margin-bottom: 0; }
 
     /* ---------- Package, set straight onto the CTA band ---------- */
-    .package { max-width: 520px; margin: 0 auto; }
+    .package { max-width: 580px; margin: 0 auto; }
     .cta .package-heading {
       font-family: var(--sans);
       font-style: normal;
@@ -346,16 +332,149 @@
     }
     .package-items {
       list-style: none;
-      margin: 0 0 36px;
+      margin: 0 auto 40px;
       padding: 0;
+      max-width: 580px;
+      text-align: left;
+      border-top: 1px solid rgba(255,255,255,0.16);
     }
     .package-items li {
-      font-family: var(--serif);
-      font-size: 20px;
+      position: relative;
+      font-family: var(--sans);
+      font-size: 17px;
       line-height: 1.45;
-      color: #f2f2f2;
-      padding: 10px 0;
+      color: #ececec;
+      padding: 12px 0 12px 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.16);
     }
+    .package-items li::before {
+      /* tick */
+      content: "";
+      position: absolute;
+      left: 4px; top: 17px;
+      width: 6px; height: 11px;
+      border: solid #b58ae0;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .cta .package-price {
+      font-family: var(--serif);
+      font-style: normal;
+      font-weight: 600;
+      font-size: 28px;
+      color: #fff;
+      margin: 0 0 4px;
+    }
+    .cta .package-cohort {
+      font-family: var(--sans);
+      font-style: normal;
+      font-size: 15px;
+      color: #c9c9c9;
+      margin: 0 0 28px;
+    }
+
+    /* ---------- Hero facts and next-cohort line ---------- */
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 0 28px;
+      padding: 0;
+      list-style: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .hero-meta li + li::before { content: "·"; margin: 0 10px; color: #9a9a9a; }
+    .cohort {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      margin: 0 0 16px;
+    }
+    .cohort::before {
+      content: "";
+      display: inline-block;
+      width: 8px; height: 8px;
+      margin-right: 10px;
+      border-radius: 50%;
+      background: #b58ae0;
+      vertical-align: middle;
+      position: relative; top: -1px;
+    }
+
+    /* ---------- Course details panel ---------- */
+    /* Full-width band with the hero image washed out to near-white, used to set a section apart */
+    .band {
+      position: relative;
+      margin: 64px calc(50% - 50vw) 0;
+      padding: 8px calc(50vw - 50%) 48px;
+      background: #f4f4f4 var(--hero-image) center 40% / cover no-repeat;
+      border-top: 1px solid var(--detail);
+      border-bottom: 1px solid var(--detail);
+    }
+    .band::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: rgba(250,250,250,0.93);
+    }
+    .band > * { position: relative; }
+    .band + h2 { margin-top: 64px; }
+    .details h2 { margin-top: 48px; margin-bottom: 16px; }
+    .details dl { margin: 0 0 20px; }
+    .details dl > div {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 0 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--detail);
+    }
+    .details dl > div:last-child { border-bottom: 0; }
+    .details dt {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      padding-top: 4px;
+    }
+    .details dd { margin: 0; font-size: 17px; }
+    .details-note { font-size: 15px; color: var(--text-secondary); }
+    .details-note p { margin: 0 0 20px; }
+
+    /* ---------- Who it's for ---------- */
+    .audience h2 { margin-top: 48px; margin-bottom: 20px; }
+    .audience + .why { border-top: 0; }
+    .audience h3 { font-family: var(--serif); font-weight: 600; font-size: 22px; margin: 32px 0 12px; }
+    .audience-text ul { margin: 0 0 18px; padding-left: 1.1em; }
+    .audience-text li { margin: 0 0 8px; }
+
+    /* ---------- FAQ ---------- */
+    .faq { border-top: 1px solid var(--detail); margin-top: 48px; }
+    .faq h2 { margin-top: 48px; margin-bottom: 16px; }
+    .faq details { border-bottom: 1px solid var(--detail); }
+    .faq summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 16px 32px 16px 0;
+      position: relative;
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 19px;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: "+";
+      position: absolute; right: 4px; top: 12px;
+      font-family: var(--sans);
+      font-size: 24px;
+      color: var(--accent);
+    }
+    .faq details[open] summary::after { content: "–"; }
+    .faq summary:focus-visible { outline: 3px solid rgba(137,80,187,0.45); outline-offset: 2px; }
+    .faq-answer { padding: 0 0 8px; font-size: 17px; }
 
     /* ---------- Sticky sign-up bar ---------- */
     .stickybar {
@@ -428,6 +547,8 @@
       .why-body.has-image { grid-template-columns: 1fr; }
       .why-image { max-width: 240px; }
       .stickybar-inner { padding: 8px 16px; }
+      .details dl > div { grid-template-columns: 1fr; }
+      .details dt { padding-top: 0; }
     }
   </style>
 </head>
@@ -455,12 +576,12 @@
       <p class="eyebrow">{{ page.eyebrow }}</p>
       <h1>{{ page.title }}</h1>
       <p class="dek">{{ page.dek }}</p>
-      {% if page.sessions %}
-      <ol class="sessions-strip">
-        {% for session in page.sessions %}<li><span>{{ session.number }}</span>{{ session.title }}</li>
-        {% endfor %}
-      </ol>
+      {% if page.hero_meta %}
+      <ul class="hero-meta">
+        {% for item in page.hero_meta %}<li>{{ item }}</li>{% endfor %}
+      </ul>
       {% endif %}
+      {% if page.next_cohort %}<p class="cohort">{{ page.next_cohort }}</p>{% endif %}
       <a class="btn" {{ signup_attrs }}>{{ page.button_text | default: "Sign up now" }}</a>
     </div>
   </section>
@@ -469,6 +590,18 @@
     <div class="intro">
       {{ content }}
     </div>
+
+    {% if page.details %}
+    <section class="details band" id="course-details" aria-labelledby="course-details-heading">
+      <h2 id="course-details-heading">{{ page.details_heading | default: "Course details" }}</h2>
+      <dl>
+        {% for d in page.details %}<div><dt>{{ d.label }}</dt><dd>{{ d.value }}</dd></div>
+        {% endfor %}
+      </dl>
+      {% if page.details_note %}<div class="details-note">{{ page.details_note | markdownify }}</div>{% endif %}
+      <a class="btn" {{ signup_attrs }}>{{ page.button_text | default: "Sign up now" }}</a>
+    </section>
+    {% endif %}
 
     {% if page.sessions %}
     <h2>{{ page.syllabus_heading | default: "The syllabus" }}</h2>
@@ -486,6 +619,19 @@
     {% endfor %}
     {% endif %}
 
+    {% if page.audience or page.prerequisites %}
+    <section class="audience band" id="who-its-for">
+      {% if page.audience %}
+      <h2>{{ page.audience_heading | default: "Who is this course for?" }}</h2>
+      <div class="audience-text">{{ page.audience | markdownify }}</div>
+      {% endif %}
+      {% if page.prerequisites %}
+      <h3>{{ page.prerequisites_heading | default: "What you need" }}</h3>
+      <div class="audience-text">{{ page.prerequisites | markdownify }}</div>
+      {% endif %}
+    </section>
+    {% endif %}
+
     {% if page.why %}
     <section class="why" id="{{ page.why_heading | slugify }}">
       <h2>{{ page.why_heading }}</h2>
@@ -493,6 +639,18 @@
         {% if page.why_image %}<img class="why-image" src="{{ page.why_image | relative_url }}" alt="" loading="lazy">{% endif %}
         <div class="why-text">{{ page.why | markdownify }}</div>
       </div>
+    </section>
+    {% endif %}
+
+    {% if page.faq %}
+    <section class="faq" id="faq">
+      <h2>{{ page.faq_heading | default: "Frequently asked questions" }}</h2>
+      {% for f in page.faq %}
+      <details>
+        <summary>{{ f.question }}</summary>
+        <div class="faq-answer">{{ f.answer | markdownify }}</div>
+      </details>
+      {% endfor %}
     </section>
     {% endif %}
   </main>
@@ -508,6 +666,8 @@
           {% for item in page.package %}<li>{{ item | markdownify | remove: '<p>' | remove: '</p>' | strip }}</li>
           {% endfor %}
         </ul>
+        {% if page.package_price %}<p class="package-price">{{ page.package_price }}</p>{% endif %}
+        {% if page.package_cohort %}<p class="package-cohort">{{ page.package_cohort }}</p>{% endif %}
         <a class="btn" {{ signup_attrs }}>{{ page.button_text | default: "Sign up now" }}</a>
       </div>
       {% else %}
