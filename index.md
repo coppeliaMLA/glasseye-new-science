@@ -108,8 +108,6 @@ prerequisites: |
 # "Why Glasseye" section (after the syllabus). `why` is Markdown.
 why_heading: Why do this with Glasseye?
 why: |
-  Every session is taught live by Simon, so you can bring your own questions and problems.
-
   The course is run by [Simon Raper](https://www.linkedin.com/in/simonrapercoppelia), a veteran data scientist with 25 years of experience of problem solving in data science, statistics, and machine learning. He has trained and mentored hundreds of data scientists, including at Google, *The Economist*, and ITV.
 
   Simon is also a rabid early adopter of new technology and has been adapting his methods since the early days of generative AI. He has both the old knowledge and the new techniques.
